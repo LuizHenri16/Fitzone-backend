@@ -1,9 +1,7 @@
 package com.fitzone.FITZONE.Models.User;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
+import com.fitzone.FITZONE.Types.Access;
 
 @Entity
 public class User {

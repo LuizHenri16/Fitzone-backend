@@ -4,32 +4,32 @@ import com.fitzone.FITZONE.Models.Finance.License;
 import com.fitzone.FITZONE.Types.CPF;
 import com.fitzone.FITZONE.Types.Email;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
 public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
-    private String Name;
+
+    private String name;
 
     @Embedded
-    private CPF CPF;
+    private CPF cpf;
 
-    private LocalDate BirthDay;
+    private LocalDate birthDay;
 
     @Embedded
-    private Email Email;
+    private Email email;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CustomerContact Contact;
+    private CustomerContact contact;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CustomerAddress Address;
+    private CustomerAddress address;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CustomerComplementInformation ComplementInformation;
+    private CustomerComplementInformation complementInformation;
 
     @ManyToOne
     @JoinColumn(name = "licenseId", nullable = false)
@@ -42,19 +42,20 @@ public class Customer {
         if (customerName == null || customerName.trim().isBlank()) {
             throw new IllegalArgumentException("Nome do cliente inválido ou vazio!");
         }
-        this.Name = customerName;
-        this.CPF = customerCPF;
+
+        this.name = customerName;
+        this.cpf = customerCPF;
 
         if (customerBirthDay == null || customerBirthDay.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("Data de nascimento inválida!");
         }
 
-        this.BirthDay = customerBirthDay;
-        this.Email = email;
+        this.birthDay = customerBirthDay;
+        this.email = email;
         this.license = license;
-        this.Contact = customerContact;
-        this.Address = customerAddress;
-        this.ComplementInformation = customerComplementInformation;
+        this.contact = customerContact;
+        this.address = customerAddress;
+        this.complementInformation = customerComplementInformation;
         this.status = status;
     }
 }
