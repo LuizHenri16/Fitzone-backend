@@ -22,7 +22,7 @@ public class CustomerContact {
     private Phone emergencyTelephone;
 
     @OneToOne()
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     public CustomerContact() {
@@ -35,6 +35,14 @@ public class CustomerContact {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public void updateTelephone(Phone telephone) {
+        this.telephone = telephone;
+    }
+
+    public void updateEmergencyTelephone(Phone emergencyTelephone) {
+        this.emergencyTelephone = emergencyTelephone;
     }
 
     public String getTelephoneValue() {

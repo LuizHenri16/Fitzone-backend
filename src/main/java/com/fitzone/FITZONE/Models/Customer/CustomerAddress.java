@@ -11,7 +11,7 @@ public class CustomerAddress {
     private String address;
 
     @OneToOne()
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     public CustomerAddress() {
@@ -26,6 +26,10 @@ public class CustomerAddress {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public void updateAddress(String address) {
+        this.address = address;
     }
 
     public String getAddress() {

@@ -1,7 +1,7 @@
 package com.fitzone.FITZONE.Types;
 
 public class Email {
-        private String customerEmail;
+        private String email;
 
         public Email() {
         }
@@ -10,11 +10,11 @@ public class Email {
             if(!validate(email)) {
                 throw new IllegalArgumentException("Email inválido");
             }
-            this.customerEmail = email;
+            this.email = email;
         }
 
         public String getCustomerEmail() {
-            return this.customerEmail;
+            return this.email;
         }
 
         private static boolean validate(String email) {

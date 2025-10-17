@@ -4,21 +4,20 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class CPF {
-    private String customerCPF;
+    private String cpf;
 
     public CPF() {
-
     }
 
     public CPF(String cpf) {
         if(!validate(cpf)) {
             throw new IllegalArgumentException("CPF inválido!");
         }
-        this.customerCPF = cpf;
+        this.cpf = cpf;
     }
 
     public String getCustomerCPF() {
-        return customerCPF;
+        return cpf;
     }
 
     private static Boolean validate(String cpf){

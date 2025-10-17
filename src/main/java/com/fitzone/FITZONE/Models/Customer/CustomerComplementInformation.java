@@ -13,7 +13,7 @@ public class CustomerComplementInformation {
     private String healthHistory;
 
     @OneToOne()
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     public CustomerComplementInformation() {
@@ -38,6 +38,18 @@ public class CustomerComplementInformation {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public void updateWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public void updateHeight(Double height) {
+        this.height = height;
+    }
+
+    public void updateHealthHistory(String healthHistory) {
+        this.healthHistory = healthHistory;
     }
 
     public Double getHeight() {
