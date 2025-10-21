@@ -1,11 +1,16 @@
 package com.fitzone.FITZONE.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 public class CustomerDTO {
-    private String customerName;
-    private String customerCPF;
-    private LocalDate customerBirthDay;
+    private String name;
+    private String cpf;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate birthday;
+
     private String email;
     private String license;
     private String telephoneNumber;
@@ -15,30 +20,30 @@ public class CustomerDTO {
     private Double height;
     private String healthHistory;
 
-    public CustomerDTO(String customerName, String customerCPF, LocalDate customerBirthDay, String email, String license, String telephoneNumber, String emergencyTelephoneNumber, String address, Double weight, Double height, String healthHistory) {
-        this.customerName = customerName;
-        this.customerCPF = customerCPF;
-        this.customerBirthDay = customerBirthDay;
+    public CustomerDTO(String customerName, String customerCPF, LocalDate customerBirthDay, String email, String license, String telephoneNumber, String EmergencyTelephoneNumber, String address, Double weight, Double height, String healthHistory) {
+        this.name = customerName;
+        this.cpf = customerCPF;
+        this.birthday = customerBirthDay;
         this.email = email;
         this.license = license;
         this.telephoneNumber = telephoneNumber;
-        this.EmergencyTelephoneNumber = emergencyTelephoneNumber;
+        this.EmergencyTelephoneNumber = EmergencyTelephoneNumber;
         this.address = address;
         this.weight = weight;
         this.height = height;
         this.healthHistory = healthHistory;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getName() {
+        return name;
     }
 
-    public String getCustomerCPF() {
-        return customerCPF;
+    public String getCpf() {
+        return cpf;
     }
 
-    public LocalDate getCustomerBirthDay() {
-        return customerBirthDay;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
     public String getEmail() {

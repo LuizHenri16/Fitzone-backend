@@ -76,6 +76,10 @@ public class Customer {
         return Id;
     }
 
+    public String getEmail() {
+        return email.getCustomerEmail();
+    }
+
     public CustomerContact getCustomerContact() {
         return contact;
     }

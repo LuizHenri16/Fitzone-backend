@@ -9,6 +9,8 @@ import com.fitzone.FITZONE.Types.Phone;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 
 @Component
 public class CustomerBuilder {
@@ -19,13 +21,15 @@ public class CustomerBuilder {
     }
 
     public Customer buildCustomerFromDTO(CustomerDTO customerDTO) throws ChangeSetPersister.NotFoundException {
-
         License license = financeService.getLicenseByName(customerDTO.getLicense()).orElseThrow(ChangeSetPersister.NotFoundException::new);
 
+        System.out.println(customerDTO.getTelephoneNumber());
+        System.out.println(customerDTO.getEmergencyTelephoneNumber());
+
         return new Customer(
-                customerDTO.getCustomerName(),
-                new CPF(customerDTO.getCustomerCPF()),
-                customerDTO.getCustomerBirthDay(),
+                customerDTO.getName(),
+                new CPF(customerDTO.getCpf()),
+                customerDTO.getBirthday(),
                 new Email(customerDTO.getEmail()),
                 license,
                 new CustomerContact(

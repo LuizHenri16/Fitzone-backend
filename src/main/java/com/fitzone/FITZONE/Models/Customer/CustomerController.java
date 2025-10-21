@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -34,14 +32,12 @@ public class CustomerController {
         return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
     }
 
-    // Retorno paginado
     @GetMapping
     public ResponseEntity<Page<Customer>> getAllCustomers(@PageableDefault(page = 0, size = 10) Pageable pageable) {
         Page<Customer> paginateCustomers = customerService.findAllPaginable(pageable);
         return ResponseEntity.ok(paginateCustomers);
     }
 
-     //Retorno único
     @GetMapping("/{id}")
     public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
         Customer customer = customerService.getCustomer(id);
@@ -59,7 +55,6 @@ public class CustomerController {
         return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
     }
 
-    //Excluir customer
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         boolean deletado = customerService.deleteByID(id);
