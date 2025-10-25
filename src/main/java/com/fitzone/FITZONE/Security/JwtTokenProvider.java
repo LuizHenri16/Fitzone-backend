@@ -28,8 +28,10 @@ public class JwtTokenProvider {
 
     private Key key;
 
-    @PostConstruct
-    public void init() {
+    public JwtTokenProvider(@Value("${jwt.secret}") String jwtSecret,
+                            @Value("${jwt.expiration}") int jwtExpirationInMs) {
+        this.jwtSecret = jwtSecret;
+        this.jwtExpirationInMs = jwtExpirationInMs;
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
@@ -65,6 +67,7 @@ public class JwtTokenProvider {
                     .parseClaimsJws(authToken);
             return true;
         } catch (Exception ex) {
+            System.err.println("FALHA DE VALIDAÇÃO JWT: " + ex.getClass().getSimpleName() + " - " + ex.getMessage());
             return false;
         }
     }
