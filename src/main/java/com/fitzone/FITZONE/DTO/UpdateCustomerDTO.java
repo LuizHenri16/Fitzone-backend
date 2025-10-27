@@ -1,29 +1,34 @@
 package com.fitzone.FITZONE.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 public class UpdateCustomerDTO {
-    private String customerName;
-    private String customerCPF;
-    private LocalDate customerBirthDay;
+    private String name;
+    private String cpf;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate birthDay;
+
     private String email;
     private String license;
     private String telephoneNumber;
-    private String EmergencyTelephoneNumber;
+    private String emergencyTelephoneNumber;
     private String address;
     private Double weight;
     private Double height;
     private String healthHistory;
     private String status;
 
-    public UpdateCustomerDTO(String customerName, String customerCPF, LocalDate customerBirthDay, String email, String license, String telephoneNumber, String emergencyTelephoneNumber, String address, Double weight, Double height, String healthHistory, String status) {
-        this.customerName = customerName;
-        this.customerCPF = customerCPF;
-        this.customerBirthDay = customerBirthDay;
+    public UpdateCustomerDTO(String name, String cpf, LocalDate birthday, String email, String license, String telephoneNumber, String emergencyTelephoneNumber, String address, Double weight, Double height, String healthHistory, String status) {
+        this.name = name;
+        this.cpf = cpf;
+        this.birthDay = birthday;
         this.email = email;
         this.license = license;
         this.telephoneNumber = telephoneNumber;
-        EmergencyTelephoneNumber = emergencyTelephoneNumber;
+        this.emergencyTelephoneNumber = emergencyTelephoneNumber;
         this.address = address;
         this.weight = weight;
         this.height = height;
@@ -31,28 +36,31 @@ public class UpdateCustomerDTO {
         this.status = status;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public UpdateCustomerDTO() {
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public String getName() {
+        return name;
     }
 
-    public String getCustomerCPF() {
-        return customerCPF;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setCustomerCPF(String customerCPF) {
-        this.customerCPF = customerCPF;
+    public String getCpf() {
+        return cpf;
     }
 
-    public LocalDate getCustomerBirthDay() {
-        return customerBirthDay;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public void setCustomerBirthDay(LocalDate customerBirthDay) {
-        this.customerBirthDay = customerBirthDay;
+    public LocalDate getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(LocalDate birthDay) {
+        this.birthDay = birthDay;
     }
 
     public String getEmail() {
@@ -80,11 +88,11 @@ public class UpdateCustomerDTO {
     }
 
     public String getEmergencyTelephoneNumber() {
-        return EmergencyTelephoneNumber;
+        return emergencyTelephoneNumber;
     }
 
     public void setEmergencyTelephoneNumber(String emergencyTelephoneNumber) {
-        EmergencyTelephoneNumber = emergencyTelephoneNumber;
+        this.emergencyTelephoneNumber = emergencyTelephoneNumber;
     }
 
     public String getAddress() {

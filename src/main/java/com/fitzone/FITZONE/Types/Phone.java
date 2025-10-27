@@ -1,7 +1,7 @@
 package com.fitzone.FITZONE.Types;
 
 public class Phone {
-    private String value;
+    private String number;
 
     public Phone() {}
 
@@ -10,11 +10,11 @@ public class Phone {
         if (!validate(value)) {
             throw new IllegalArgumentException("Telefone inválido");
         }
-        this.value = value;
+        this.number = value;
     }
 
-    public String getValue() {
-        return this.value;
+    public String getNumber() {
+        return this.number;
     }
 
     private static boolean validate(String phone) {

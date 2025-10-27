@@ -31,7 +31,6 @@ public class CustomerBuilder {
                 new CPF(customerDTO.getCpf()),
                 customerDTO.getBirthday(),
                 new Email(customerDTO.getEmail()),
-                license,
                 new CustomerContact(
                         new Phone(customerDTO.getTelephoneNumber()),
                         new Phone(customerDTO.getEmergencyTelephoneNumber())),
@@ -39,6 +38,7 @@ public class CustomerBuilder {
                 new CustomerAddress(customerDTO.getAddress()),
 
                 new CustomerComplementInformation(customerDTO.getWeight(), customerDTO.getHeight(), customerDTO.getHealthHistory()),
+                license,
                 true
         );
     }

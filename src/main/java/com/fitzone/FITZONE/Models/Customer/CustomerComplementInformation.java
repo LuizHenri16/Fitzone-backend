@@ -10,7 +10,7 @@ public class CustomerComplementInformation {
 
     private Double weight;
     private Double height;
-    private String healthHistory;
+    private String healthhistory;
 
     @OneToOne()
     @JoinColumn(name = "customer_id")
@@ -19,7 +19,7 @@ public class CustomerComplementInformation {
     public CustomerComplementInformation() {
     }
 
-    public CustomerComplementInformation(Double weight, Double height, String healthHistory) {
+    public CustomerComplementInformation(Double weight, Double height, String healthhistory) {
         if(weight == null || weight < 1) {
             throw new IllegalArgumentException("Peso inválido!");
         }
@@ -30,10 +30,10 @@ public class CustomerComplementInformation {
         }
         this.height = height;
 
-        if(healthHistory == null || healthHistory.trim().isEmpty()) {
+        if(healthhistory == null || healthhistory.trim().isEmpty()) {
             throw new IllegalArgumentException("Peso inválido!");
         }
-        this.healthHistory = healthHistory;
+        this.healthhistory = healthhistory;
     }
 
     public void setCustomer(Customer customer) {
@@ -48,8 +48,8 @@ public class CustomerComplementInformation {
         this.height = height;
     }
 
-    public void updateHealthHistory(String healthHistory) {
-        this.healthHistory = healthHistory;
+    public void updateHealthHistory(String healthhistory) {
+        this.healthhistory = healthhistory;
     }
 
     public Double getHeight() {
@@ -60,7 +60,7 @@ public class CustomerComplementInformation {
         return weight;
     }
 
-    public String getHealthHistory() {
-        return healthHistory;
+    public String getHealthhistory() {
+        return healthhistory;
     }
 }

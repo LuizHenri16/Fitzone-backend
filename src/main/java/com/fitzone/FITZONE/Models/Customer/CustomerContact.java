@@ -11,13 +11,13 @@ public class CustomerContact {
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "value", column = @Column(name = "telephone"))
+            @AttributeOverride(name = "number", column = @Column(name = "telephone"))
     })
     private Phone telephone;
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "value", column = @Column(name = "emergencyTelephone"))
+            @AttributeOverride(name = "number", column = @Column(name = "emergencyTelephone"))
     })
     private Phone emergencyTelephone;
 
@@ -46,10 +46,10 @@ public class CustomerContact {
     }
 
     public String getTelephoneValue() {
-        return telephone.getValue();
+        return telephone.getNumber();
     }
 
     public String getEmergencyTelephoneValue() {
-        return emergencyTelephone.getValue();
+        return emergencyTelephone.getNumber();
     }
 }

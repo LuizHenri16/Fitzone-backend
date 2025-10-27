@@ -67,7 +67,6 @@ public class JwtTokenProvider {
                     .parseClaimsJws(authToken);
             return true;
         } catch (Exception ex) {
-            System.err.println("FALHA DE VALIDAÇÃO JWT: " + ex.getClass().getSimpleName() + " - " + ex.getMessage());
             return false;
         }
     }
