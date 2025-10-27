@@ -59,7 +59,6 @@ public class CustomerService {
     }
 
     public boolean deleteByID(Long id) {
-
         if (customerRepository.existsById(id)) {
             customerRepository.deleteById(id);
             return true;
@@ -76,6 +75,6 @@ public class CustomerService {
     }
 
     public Integer getRegisteredActiveCustomers() {
-        return customerRepository.CountRegisteredCustomers();
+        return customerRepository.CountRegisteredActiveCustomers();
     }
 }

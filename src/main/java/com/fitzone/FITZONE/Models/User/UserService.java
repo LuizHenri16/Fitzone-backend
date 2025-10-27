@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -19,7 +23,6 @@ public class UserService {
     }
 
     public User createUser(UserDTO userDTO) {
-
         Access userAccess;
 
         try {
@@ -35,4 +38,39 @@ public class UserService {
 
         return userRepository.save(newUser);
     }
+
+    public List<UserDTO> findUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> usersDTO = new ArrayList<>();
+
+        for (User user : users) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setUsername(user.getUsername());
+            userDTO.setAccess(user.getAccess().getValue());
+
+            usersDTO.add(userDTO);
+        }
+        return usersDTO;
+    }
+
+    public UserDTO findUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.setId(user.get().getId());
+        userDTO.setUsername(user.get().getUsername());
+        userDTO.setAccess(user.get().getAccess().getValue());
+
+        return userDTO;
+    }
+
+    public boolean deleteByID(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 }

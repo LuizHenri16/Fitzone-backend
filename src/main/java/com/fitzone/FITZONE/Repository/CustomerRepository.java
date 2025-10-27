@@ -13,12 +13,12 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Override
     Page<Customer> findAll(Pageable pageable);
 
-    @NativeQuery("SELECT name FROM customer WHERE DAY(birth_day) = DAY(CURDATE()) AND MONTH(birth_day) = MONTH(CURDATE())")
+    @NativeQuery("SELECT name FROM customer WHERE DAY(birthday) = DAY(CURDATE()) AND MONTH(birthday) = MONTH(CURDATE())")
     BirthDayDTO findAllByrthday();
 
     @NativeQuery("SELECT COUNT(*) FROM customer")
     Integer CountRegisteredCustomers();
 
-    @NativeQuery("SELECT COUNT(*) FROM customer where status = true")
+    @NativeQuery("SELECT COUNT(*) FROM customer where status = 1")
     Integer CountRegisteredActiveCustomers();
 }
