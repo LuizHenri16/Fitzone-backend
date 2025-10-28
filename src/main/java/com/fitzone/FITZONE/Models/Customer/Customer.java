@@ -23,7 +23,7 @@ public class Customer {
     @Embedded
     private CPF cpf;
 
-    private LocalDate birthDay;
+    private LocalDate birthday;
 
     @Embedded
     private Email email;
@@ -50,25 +50,22 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String customerName, CPF customerCPF, LocalDate customerBirthDay, Email email, License license, CustomerContact customerContact, CustomerAddress customerAddress, CustomerComplementInformation customerComplementInformation, boolean status) {
-
-        if (customerName == null || customerName.trim().isBlank()) {
+    public Customer(String name, CPF cpf, LocalDate birthday, Email email, CustomerContact contact, CustomerAddress address, CustomerComplementInformation complementInformation, License license, boolean status) {
+        if (name == null || name.trim().isBlank()) {
             throw new IllegalArgumentException("Nome do cliente inválido ou vazio!");
         }
+        this.name = name;
+        this.cpf = cpf;
 
-        this.name = customerName;
-        this.cpf = customerCPF;
-
-        if (customerBirthDay == null || customerBirthDay.isAfter(LocalDate.now())) {
+        if (birthday == null || birthday.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("Data de nascimento inválida!");
         }
-
-        this.birthDay = customerBirthDay;
+        this.birthday = birthday;
         this.email = email;
+        this.contact = contact;
+        this.address = address;
+        this.complementInformation = complementInformation;
         this.license = license;
-        this.contact = customerContact;
-        this.address = customerAddress;
-        this.complementInformation = customerComplementInformation;
         this.status = status;
     }
 
@@ -105,7 +102,8 @@ public class Customer {
     }
 
     public void updateBirthDay(LocalDate newBirthDay) {
-        this.birthDay = newBirthDay;
+        System.out.println(newBirthDay);
+        this.birthday = newBirthDay;
     }
 
     public void updateLicenses(License newLicense) {
@@ -140,7 +138,7 @@ public class Customer {
     }
 
     public LocalDate getCustomerBirthDay() {
-        return birthDay;
+        return birthday;
     }
 
 

@@ -1,11 +1,12 @@
 package com.fitzone.FITZONE.Models.User;
 
 import com.fitzone.FITZONE.DTO.UserDTO;
+import com.fitzone.FITZONE.Models.Customer.Customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -17,10 +18,46 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping
-    public ResponseEntity<User> newUser(UserDTO userDTO) {
+    public ResponseEntity<User> newUser(@RequestBody  UserDTO userDTO) {
         User createdUser = userService.createUser(userDTO);
 
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getUsers() {
+        List<UserDTO> usersDTO = userService.findUsers();
+
+        return ResponseEntity.ok(usersDTO);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        UserDTO user = userService.findUser(id);
+
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> editUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        User user = userService.editCustomer(id, userDTO);
+        UserDTO responseUserDTO = new UserDTO(user.getId(), user.getUsername(), user.getAccess());
+
+        return new ResponseEntity<>(responseUserDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable  Long id) {
+        boolean deletado = userService.deleteByID(id);
+
+        if (deletado) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

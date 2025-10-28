@@ -1,7 +1,6 @@
 package com.fitzone.FITZONE.Models.User;
 
 import jakarta.persistence.*;
-import com.fitzone.FITZONE.Types.Access;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +16,16 @@ public class User implements UserDetails {
 
     private String username;
     private String password;
-    private Access access;
+    private String access;
 
-    public User(String username, String password, Access access) {
+    public User(String username, String password, String access) {
+        this.username = username;
+        this.password = password;
+        this.access = access;
+    }
+
+    public User(long id, String username, String password, String access) {
+        this.Id = id;
         this.username = username;
         this.password = password;
         this.access = access;
@@ -34,6 +40,10 @@ public class User implements UserDetails {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setId(long id) {
+        Id = id;
     }
 
     @Override
@@ -65,7 +75,7 @@ public class User implements UserDetails {
         return password;
     }
 
-    public Access getAccess() {
+    public String getAccess() {
         return access;
     }
 
@@ -77,7 +87,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setAccess(Access access) {
+    public void setAccess(String access) {
         this.access = access;
     }
 }

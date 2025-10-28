@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -19,20 +23,57 @@ public class UserService {
     }
 
     public User createUser(UserDTO userDTO) {
-
-        Access userAccess;
-
-        try {
-            userAccess = Access.valueOf(userDTO.getAccess().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Nível de acesso inválido");
-        }
-
-        User newUser = new User(userDTO.getUsername(), userDTO.getPassword(), userAccess);
+        User newUser = new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getAccess());
 
         String hashedPassword = passwordEncoder.encode(newUser.getPassword());
         newUser.setPassword(hashedPassword);
 
         return userRepository.save(newUser);
     }
+
+    public User editCustomer(Long id, UserDTO userDTO) {
+
+        User updateUser = new User();
+        updateUser.setId(id);
+        updateUser.setUsername(userDTO.getUsername());
+        updateUser.setAccess(userDTO.getAccess());
+        updateUser.setPassword(userDTO.getPassword());
+
+        return userRepository.save(updateUser);
+    }
+
+    public List<UserDTO> findUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserDTO> usersDTO = new ArrayList<>();
+
+        for (User user : users) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setUsername(user.getUsername());
+            userDTO.setAccess(user.getAccess());
+
+            usersDTO.add(userDTO);
+        }
+        return usersDTO;
+    }
+
+    public UserDTO findUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.setId(user.get().getId());
+        userDTO.setUsername(user.get().getUsername());
+        userDTO.setAccess(user.get().getAccess());
+
+        return userDTO;
+    }
+
+    public boolean deleteByID(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 }

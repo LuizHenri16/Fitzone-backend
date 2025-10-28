@@ -11,7 +11,6 @@ import com.fitzone.FITZONE.Types.Phone;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,14 +33,13 @@ public class CustomerService {
     }
 
     public Customer editCustomer(Long id, UpdateCustomerDTO customerDTO) throws ChangeSetPersister.NotFoundException {
-        // retorna o cliente
         Customer existentCustomer = getCustomer(id);
         License license = financeService.getLicenseByName(customerDTO.getLicense()).orElseThrow(ChangeSetPersister.NotFoundException::new);
 
-        existentCustomer.updateName(customerDTO.getCustomerName());
-        existentCustomer.updateCPF(new CPF(customerDTO.getCustomerCPF()));
+        existentCustomer.updateName(customerDTO.getName());
+        existentCustomer.updateCPF(new CPF(customerDTO.getCpf()));
         existentCustomer.updateEmail(new Email(customerDTO.getEmail()));
-        existentCustomer.updateBirthDay(customerDTO.getCustomerBirthDay());
+        existentCustomer.updateBirthDay(customerDTO.getBirthDay());
         existentCustomer.updateLicenses(license);
 
         existentCustomer.updateContact(new Phone(customerDTO.getTelephoneNumber()), new Phone(customerDTO.getEmergencyTelephoneNumber()));
@@ -61,7 +59,6 @@ public class CustomerService {
     }
 
     public boolean deleteByID(Long id) {
-
         if (customerRepository.existsById(id)) {
             customerRepository.deleteById(id);
             return true;
@@ -78,6 +75,6 @@ public class CustomerService {
     }
 
     public Integer getRegisteredActiveCustomers() {
-        return customerRepository.CountRegisteredCustomers();
+        return customerRepository.CountRegisteredActiveCustomers();
     }
 }
