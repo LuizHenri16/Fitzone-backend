@@ -16,19 +16,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/customer")
 public class CustomerController {
 
-    private final CustomerBuilder customerBuilder;
     private final CustomerService customerService;
 
-    public CustomerController(CustomerBuilder customerBuilder, CustomerService customerService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-        this.customerBuilder = customerBuilder;
     }
 
     @PostMapping
     public ResponseEntity<Customer> newCustomer(@RequestBody CustomerDTO customerDTO) throws ChangeSetPersister.NotFoundException {
-        Customer customer = customerBuilder.buildCustomerFromDTO(customerDTO);
-        Customer newCustomer = customerService.saveCustomer(customer);
-
+        Customer newCustomer = customerService.saveCustomer(customerDTO);
         return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
     }
 

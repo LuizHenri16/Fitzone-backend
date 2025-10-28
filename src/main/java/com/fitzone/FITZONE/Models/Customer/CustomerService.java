@@ -1,6 +1,7 @@
 package com.fitzone.FITZONE.Models.Customer;
 
 import com.fitzone.FITZONE.DTO.BirthDayDTO;
+import com.fitzone.FITZONE.DTO.CustomerDTO;
 import com.fitzone.FITZONE.DTO.UpdateCustomerDTO;
 import com.fitzone.FITZONE.Models.Finance.FinanceService;
 import com.fitzone.FITZONE.Models.Finance.License;
@@ -17,14 +18,19 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     private final CustomerRepository customerRepository;
     private final FinanceService financeService;
+    private final CustomerBuilder customerBuilder;
 
-    public CustomerService(CustomerRepository customerRepository, FinanceService financeService) {
+    public CustomerService(CustomerRepository customerRepository, FinanceService financeService, CustomerBuilder customerBuilder) {
         this.customerRepository = customerRepository;
         this.financeService = financeService;
+        this.customerBuilder = customerBuilder;
     }
 
-    public Customer saveCustomer(Customer newCustomer) {
+    public Customer saveCustomer(CustomerDTO customerDTO) throws ChangeSetPersister.NotFoundException {
+        License license = financeService.getLicenseByName(customerDTO.getLicense()).orElseThrow(ChangeSetPersister.NotFoundException::new);
 
+        Customer newCustomer = customerBuilder.buildCustomerFromDTO(customerDTO);
+        newCustomer.setLicense(license);
         newCustomer.getCustomerAddress().setCustomer(newCustomer);
         newCustomer.getCustomerContact().setCustomer(newCustomer);
         newCustomer.getCustomerComplementInformation().setCustomer(newCustomer);
