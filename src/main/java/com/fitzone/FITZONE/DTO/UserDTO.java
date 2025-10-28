@@ -6,6 +6,15 @@ public class UserDTO {
     private String password;
     private String access;
 
+    public UserDTO() {
+    }
+
+    public UserDTO(Long id, String username, String access) {
+        this.id = id;
+        this.username = username;
+        this.access = access;
+    }
+
     public Long getId() {
         return id;
     }

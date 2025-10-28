@@ -40,7 +40,7 @@ public class AuthController {
         response.setTokenType("Bearer");
         response.setId(userDetails.getId());
         response.setUsername(userDetails.getUsername());
-        response.setAccess(userDetails.getAccess().getValue());
+        response.setAccess(userDetails.getAccess());
 
         return ResponseEntity.ok(response);
     }

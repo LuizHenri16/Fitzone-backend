@@ -42,6 +42,14 @@ public class UserController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> editUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        User user = userService.editCustomer(id, userDTO);
+        UserDTO responseUserDTO = new UserDTO(user.getId(), user.getUsername(), user.getAccess());
+
+        return new ResponseEntity<>(responseUserDTO, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable  Long id) {
         boolean deletado = userService.deleteByID(id);
@@ -52,7 +60,4 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
-
 }

@@ -23,20 +23,23 @@ public class UserService {
     }
 
     public User createUser(UserDTO userDTO) {
-        Access userAccess;
-
-        try {
-            userAccess = Access.valueOf(userDTO.getAccess().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Nível de acesso inválido");
-        }
-
-        User newUser = new User(userDTO.getUsername(), userDTO.getPassword(), userAccess);
+        User newUser = new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getAccess());
 
         String hashedPassword = passwordEncoder.encode(newUser.getPassword());
         newUser.setPassword(hashedPassword);
 
         return userRepository.save(newUser);
+    }
+
+    public User editCustomer(Long id, UserDTO userDTO) {
+
+        User updateUser = new User();
+        updateUser.setId(id);
+        updateUser.setUsername(userDTO.getUsername());
+        updateUser.setAccess(userDTO.getAccess());
+        updateUser.setPassword(userDTO.getPassword());
+
+        return userRepository.save(updateUser);
     }
 
     public List<UserDTO> findUsers() {
@@ -47,7 +50,7 @@ public class UserService {
             UserDTO userDTO = new UserDTO();
             userDTO.setId(user.getId());
             userDTO.setUsername(user.getUsername());
-            userDTO.setAccess(user.getAccess().getValue());
+            userDTO.setAccess(user.getAccess());
 
             usersDTO.add(userDTO);
         }
@@ -60,7 +63,7 @@ public class UserService {
 
         userDTO.setId(user.get().getId());
         userDTO.setUsername(user.get().getUsername());
-        userDTO.setAccess(user.get().getAccess().getValue());
+        userDTO.setAccess(user.get().getAccess());
 
         return userDTO;
     }
