@@ -2,6 +2,7 @@ package com.fitzone.FITZONE.Models.Finance;
 
 import com.fitzone.FITZONE.DTO.ExpenseDTO;
 import com.fitzone.FITZONE.DTO.PaymentDTO;
+import com.fitzone.FITZONE.DTO.PaymentResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -36,7 +37,7 @@ public class FinanceController {
         return ResponseEntity.ok(expenses);
     }
 
-    @PostMapping("/payment/{id}")
+    @PostMapping("/payment/{customerId}")
     public ResponseEntity<Payment> postPayment(@PathVariable Long customerId) {
         Payment payment = financeService.savePayment(customerId);
         return new ResponseEntity<>(payment, HttpStatus.CREATED);
@@ -44,14 +45,31 @@ public class FinanceController {
 
 
     @GetMapping("/payment")
-    public ResponseEntity<Page<PaymentDTO>> getPayments(@PageableDefault(page = 0, size = 10) Pageable pageable) {
-        Page<PaymentDTO> payments = financeService.getPayments(pageable);
+    public ResponseEntity<Page<Payment>> getPayments(@PageableDefault(page = 0, size = 10) Pageable pageable) {
+        Page<Payment> payments = financeService.getPayments(pageable);
 
         if (payments == null || payments.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok(payments);
+    }
+
+
+    @GetMapping("/payment/{id}")
+    public ResponseEntity<PaymentResponse> getPayment(@PathVariable Long id) {
+        Payment payment = financeService.buscarPagamentoPorCliente(id);
+
+        PaymentResponse dto = new PaymentResponse(
+                payment.getId(),
+                payment.getCustomer().getName(),
+                payment.getCustomer().getLicense().getPrice(),
+                payment.getLastPayment()
+        );
+
+        if (payment == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(dto);
     }
 
 

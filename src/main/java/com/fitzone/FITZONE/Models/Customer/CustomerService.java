@@ -2,6 +2,7 @@ package com.fitzone.FITZONE.Models.Customer;
 
 import com.fitzone.FITZONE.DTO.BirthDayDTO;
 import com.fitzone.FITZONE.DTO.CustomerDTO;
+import com.fitzone.FITZONE.DTO.PaymentCustomerDTO;
 import com.fitzone.FITZONE.DTO.UpdateCustomerDTO;
 import com.fitzone.FITZONE.Models.Finance.FinanceService;
 import com.fitzone.FITZONE.Models.Finance.License;
@@ -13,6 +14,8 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -58,6 +61,10 @@ public class CustomerService {
 
     public Page<Customer> findAllPaginable(Pageable pageable) {
         return customerRepository.findAll(pageable);
+    }
+
+    public List<PaymentCustomerDTO> findCustomers() {
+        return customerRepository.findAllCustomers();
     }
 
     public Customer getCustomer(Long id) {

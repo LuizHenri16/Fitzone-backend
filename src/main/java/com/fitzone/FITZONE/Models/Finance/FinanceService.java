@@ -38,8 +38,20 @@ public class FinanceService {
         return paymentRepository.save(payment);
     }
 
-    public Page<PaymentDTO> getPayments(Pageable pageable) {
-        return financeRespository.findAllPayments(LocalDate.now().minusDays(30), LocalDate.now(), pageable);
+    public Page<Payment> getPayments(Pageable pageable) {
+        Page<Payment> payments = financeRespository.findAllPayments(LocalDate.now().minusDays(30), LocalDate.now(), pageable);
+
+        return payments.map(payment -> {
+            return new PaymentDTO(
+                    payment,
+                    payment.getCustomer()
+            ).getPayment();
+        });
+
+    }
+
+    public Payment buscarPagamentoPorCliente(Long clienteId) {
+        return financeRespository.findLatestPaymentByClienteId(clienteId);
     }
 
     public Optional<License> getLicenseByName(String license) {

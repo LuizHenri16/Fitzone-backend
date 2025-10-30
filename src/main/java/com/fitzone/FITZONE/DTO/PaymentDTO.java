@@ -1,50 +1,33 @@
 package com.fitzone.FITZONE.DTO;
 
-public class PaymentDTO {
-    private String lastPayment;
-    private String customerName;
-    private Double licensePrice;
-    private String customerEmail;
+import com.fitzone.FITZONE.Models.Customer.Customer;
+import com.fitzone.FITZONE.Models.Finance.Payment;
 
-    public PaymentDTO(String lastPayment, String customerName, Double licensePrice, String customerEmail) {
-        this.lastPayment = lastPayment;
-        this.customerName = customerName;
-        this.licensePrice = licensePrice;
-        this.customerEmail = customerEmail;
-    }
+public class PaymentDTO {
+    private Payment payment;
+    private Customer customer;
 
     public PaymentDTO() {
     }
 
-    public String getLastPayment() {
-        return lastPayment;
+    public PaymentDTO(Payment payment, Customer customer) {
+        this.payment = payment;
+        this.customer = customer;
     }
 
-    public void setLastPayment(String lastPayment) {
-        this.lastPayment = lastPayment;
+    public Payment getPayment() {
+        return payment;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public Double getLicensePrice() {
-        return licensePrice;
-    }
-
-    public void setLicensePrice(Double licensePrice) {
-        this.licensePrice = licensePrice;
-    }
-
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

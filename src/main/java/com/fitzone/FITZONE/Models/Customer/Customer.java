@@ -1,5 +1,6 @@
 package com.fitzone.FITZONE.Models.Customer;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fitzone.FITZONE.Models.Finance.License;
 import com.fitzone.FITZONE.Models.Finance.Payment;
@@ -11,6 +12,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Customer {
 

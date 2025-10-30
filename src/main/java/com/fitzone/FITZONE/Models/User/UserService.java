@@ -24,9 +24,7 @@ public class UserService {
 
     public User createUser(UserDTO userDTO) {
         User newUser = new User(userDTO.getUsername(), userDTO.getPassword(), userDTO.getAccess());
-
-        String hashedPassword = passwordEncoder.encode(newUser.getPassword());
-        newUser.setPassword(hashedPassword);
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         return userRepository.save(newUser);
     }
@@ -37,7 +35,7 @@ public class UserService {
         updateUser.setId(id);
         updateUser.setUsername(userDTO.getUsername());
         updateUser.setAccess(userDTO.getAccess());
-        updateUser.setPassword(userDTO.getPassword());
+        updateUser.setPassword(passwordEncoder.encode((userDTO.getPassword())));
 
         return userRepository.save(updateUser);
     }
