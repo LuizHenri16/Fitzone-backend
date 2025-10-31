@@ -15,14 +15,46 @@ public class Expense {
 
     private String description;
     private Double value;
-    private LocalDate expenseDate;
+    private LocalDate date;
 
     public Expense() {
     }
 
-    public Expense(String description, Double value, LocalDate expenseDate) {
+    public Expense(String description, Double value, LocalDate date) {
         this.description = description;
         this.value = value;
-        this.expenseDate = expenseDate;
+        this.date = date;
+    }
+
+    public long getId() {
+        return Id;
+    }
+
+    public void setId(long id) {
+        Id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

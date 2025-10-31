@@ -2,8 +2,9 @@ package com.fitzone.FITZONE.Models.Customer;
 
 import com.fitzone.FITZONE.DTO.BirthDayDTO;
 import com.fitzone.FITZONE.DTO.CustomerDTO;
+import com.fitzone.FITZONE.DTO.PaymentCustomerDTO;
 import com.fitzone.FITZONE.DTO.UpdateCustomerDTO;
-import com.fitzone.FITZONE.Models.Finance.License;
+
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,23 +13,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
 
-    private final CustomerBuilder customerBuilder;
     private final CustomerService customerService;
 
-    public CustomerController(CustomerBuilder customerBuilder, CustomerService customerService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-        this.customerBuilder = customerBuilder;
     }
 
     @PostMapping
     public ResponseEntity<Customer> newCustomer(@RequestBody CustomerDTO customerDTO) throws ChangeSetPersister.NotFoundException {
-        Customer customer = customerBuilder.buildCustomerFromDTO(customerDTO);
-        Customer newCustomer = customerService.saveCustomer(customer);
-
+        Customer newCustomer = customerService.saveCustomer(customerDTO);
         return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
     }
 
@@ -36,6 +35,17 @@ public class CustomerController {
     public ResponseEntity<Page<Customer>> getAllCustomers(@PageableDefault(page = 0, size = 10) Pageable pageable) {
         Page<Customer> paginateCustomers = customerService.findAllPaginable(pageable);
         return ResponseEntity.ok(paginateCustomers);
+    }
+
+    @GetMapping("/payment")
+    public ResponseEntity<List<PaymentCustomerDTO>> getCustomersList() {
+        List<PaymentCustomerDTO> customers = customerService.findCustomers();
+
+        if (customers != null) {
+            return new ResponseEntity<>(customers, HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}")

@@ -1,10 +1,12 @@
 package com.fitzone.FITZONE.Models.Finance;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fitzone.FITZONE.Models.Customer.Customer;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 public class Payment {
     @Id
@@ -28,6 +30,18 @@ public class Payment {
         this.license = license;
         this.lastPayment = lastPayment;
         this.customer = customer;
+    }
+
+    public long getId() {
+        return Id;
+    }
+
+    public void setId(long id) {
+        Id = id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 
     public LocalDate getLastPayment() {
