@@ -14,6 +14,7 @@ import java.util.List;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "cpf", name = "UK_CPF_CUSTOMER")})
 public class Customer {
 
     @Id
