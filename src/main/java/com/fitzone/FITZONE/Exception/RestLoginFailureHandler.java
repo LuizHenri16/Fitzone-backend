@@ -15,7 +15,7 @@ public class RestLoginFailureHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String, Object>> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
         String path = request.getDescription(false).replace("uri=", "");
-        String message = "Usuário ou senha inválida. Por favor, tente novamente.";
+        String message = "Senha inválida. Por favor, tente novamente.";
 
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("path", path);
