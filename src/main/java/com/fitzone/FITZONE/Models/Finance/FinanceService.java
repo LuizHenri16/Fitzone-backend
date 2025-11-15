@@ -47,7 +47,20 @@ public class FinanceService {
                     payment.getCustomer()
             ).getPayment();
         });
+    }
 
+    public Double buscarTotalDespesasUltimos30Dias() {
+        LocalDate trintaDias = LocalDate.now().minusDays(30);
+        Double total = expenseRepository.sumExpensesInLast30Days(trintaDias);
+
+        return total != null ? total : 0.0;
+    }
+
+    public Double buscarTotalPagamentosUltimos30Dias() {
+        LocalDate trintaDias = LocalDate.now().minusDays(30);
+        Double total = paymentRepository.sumLicenseValuesForPaymentsInLast30Days(trintaDias);
+
+        return total != null ? total : 0.0;
     }
 
     public Payment buscarPagamentoPorCliente(Long clienteId) {
