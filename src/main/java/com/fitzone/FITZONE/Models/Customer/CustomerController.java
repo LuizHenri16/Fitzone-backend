@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/customer")
@@ -26,9 +28,20 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<Customer> newCustomer(@RequestBody CustomerDTO customerDTO) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<?> newCustomer(@RequestBody CustomerDTO customerDTO) throws ChangeSetPersister.NotFoundException {
         Customer newCustomer = customerService.saveCustomer(customerDTO);
-        return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (newCustomer != null) {
+            response.put("status", "sucesso");
+            response.put("message", "cliente cadastrado com sucesso");
+            response.put("customer", response);
+            return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(newCustomer, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping
@@ -49,13 +62,21 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
+    public ResponseEntity<?> getCustomer(@PathVariable Long id) {
         Customer customer = customerService.getCustomer(id);
 
+        Map<String, Object> response = new HashMap<>();
+
         if (customer != null) {
-            return new ResponseEntity<>(customer, HttpStatus.OK);
+
+            response.put("status", "sucesso");
+            response.put("message", "cliente encontrado");
+            response.put("customer", customer);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return ResponseEntity.notFound().build();
+            response.put("status", "erro");
+            response.put("message", "cliente não encontrado");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -66,7 +87,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
         boolean deletado = customerService.deleteByID(id);
 
         if (deletado) {
@@ -77,35 +98,55 @@ public class CustomerController {
     }
 
     @GetMapping("/birthday")
-    public ResponseEntity<BirthDayDTO> getBirthdayCustomer() {
+    public ResponseEntity<?> getBirthdayCustomer() {
         BirthDayDTO birthdayCustomers = customerService.getBirthdayCustomer();
 
+        Map<String, Object> response = new HashMap<>();
+
         if (birthdayCustomers != null) {
-            return new ResponseEntity<>(birthdayCustomers, HttpStatus.OK);
+            response.put("status", "sucesso");
+            response.put("message", "aniversariantes encontrados");
+            response.put("customer", birthdayCustomers);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            response.put("status", "erro");
+            response.put("message", "não tem aniversariantes hoje");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/registeredcustomers")
-    public ResponseEntity<Integer> getCountRegisteredCustomers() {
+    public ResponseEntity<?> getCountRegisteredCustomers() {
         Integer registeredCustomers = customerService.getRegisteredCustomers();
 
+        Map<String, Object> response = new HashMap<>();
+
         if (registeredCustomers != null) {
-            return new ResponseEntity<>(registeredCustomers, HttpStatus.OK);
+            response.put("registrados", registeredCustomers);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            response.put("status", "erro");
+            response.put("message", "não tem clientes cadastrados");
+
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/activecustomers")
-    public ResponseEntity<Integer> getCountRegisteredActiveCustomers() {
+    public ResponseEntity<?> getCountRegisteredActiveCustomers() {
         Integer registeredActiveCustomers = customerService.getRegisteredActiveCustomers();
 
+        Map<String, Object> response = new HashMap<>();
+
         if (registeredActiveCustomers != null) {
-            return new ResponseEntity<>(registeredActiveCustomers, HttpStatus.OK);
+            response.put("ativos", registeredActiveCustomers);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            response.put("status", "erro");
+            response.put("message", "não tem clientes cadastrados");
+
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
 }

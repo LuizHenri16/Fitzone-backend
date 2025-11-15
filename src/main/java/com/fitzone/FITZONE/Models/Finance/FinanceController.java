@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/finance")
 public class FinanceController {
@@ -35,6 +38,25 @@ public class FinanceController {
         }
 
         return ResponseEntity.ok(expenses);
+    }
+
+    @GetMapping("expense/total")
+    public ResponseEntity<?> getTotalExpense() {
+        Double total = financeService.buscarTotalDespesasUltimos30Dias();
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (total != 0.0) {
+            response.put("status", "não encontrado");
+            response.put("mensagem", "sem despesa");
+            response.put("valor", total);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("status", "despesas cadastrados");
+            response.put("mensagem", "despesas encontradas na base de dados");
+            response.put("valor", total);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     @PostMapping("/payment/{customerId}")
@@ -72,5 +94,23 @@ public class FinanceController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("payment/total")
+    public ResponseEntity<?> getTotalPayment() {
+        Double total = financeService.buscarTotalPagamentosUltimos30Dias();
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (total != 0.0) {
+            response.put("status", "pagamentos cadastrados");
+            response.put("mensagem", "pagamentos encontrados");
+            response.put("valor", total);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("status", "não encontrado");
+            response.put("mensagem", "sem pagamento");
+            response.put("valor", total);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
 
 }
