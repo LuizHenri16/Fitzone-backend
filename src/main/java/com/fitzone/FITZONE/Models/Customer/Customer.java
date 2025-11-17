@@ -11,6 +11,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -40,8 +41,9 @@ public class Customer {
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private CustomerComplementInformation complementInformation;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Payment> payment;
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OrderBy("lastPayment DESC")
+    private Set<Payment> payments;
 
     @ManyToOne
     @JoinColumn(name = "license_id", nullable = false)
@@ -155,4 +157,12 @@ public class Customer {
     public String getStatus() {
         return status ? "Ativo" : "Inativo";
     }
+
+    public LocalDate getLastPaymentDate() {
+        if (payments == null || payments.isEmpty()) {
+            return null;
+        }
+        return payments.iterator().next().getLastPayment();
+    }
+
 }
