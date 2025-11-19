@@ -28,6 +28,22 @@ public class CustomerContact {
     public CustomerContact() {
     }
 
+    public Phone getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(Phone telephone) {
+        this.telephone = telephone;
+    }
+
+    public Phone getEmergencyTelephone() {
+        return emergencyTelephone;
+    }
+
+    public void setEmergencyTelephone(Phone emergencyTelephone) {
+        this.emergencyTelephone = emergencyTelephone;
+    }
+
     public CustomerContact(Phone telephone, Phone emergencyTelephone) {
         this.telephone = telephone;
         this.emergencyTelephone = emergencyTelephone;
